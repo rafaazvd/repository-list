@@ -14,7 +14,7 @@ describe("Likes", () => {
     let response = await request(app).post(
       `/repositories/${repository.body.repositorie.id}/like`
     );
-
+      
     expect(response.body.repositorie).toMatchObject({
       likes: 1
     });
@@ -22,13 +22,14 @@ describe("Likes", () => {
     response = await request(app).post(
       `/repositories/${repository.body.repositorie.id}/like`
     );
-
+    
     expect(response.body.repositorie).toMatchObject({
       likes: 2
     });
   });
 
   it("should not be able to like a repository that does not exist", async () => {
+    console.log('amigos, o teste aqui está passando sem nenhum erro! não entendo o que posso fazer')
     await request(app)
       .post(`/repositories/123/like`)
       .expect(400);
