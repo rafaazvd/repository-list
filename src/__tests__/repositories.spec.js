@@ -11,9 +11,10 @@ describe("Repositories", () => {
         title: "Umbriel",
         techs: ["Node", "Express", "TypeScript"]
       });
-    expect(isUuid(response.body.repositorie.id)).toBe(true);
 
-    expect(response.body.repositorie).toMatchObject({
+    expect(isUuid(response.body.id)).toBe(true);
+
+    expect(response.body).toMatchObject({
       url: "https://github.com/Rocketseat/umbriel",
       title: "Umbriel",
       techs: ["Node", "Express", "TypeScript"],
@@ -32,10 +33,10 @@ describe("Repositories", () => {
 
     const response = await request(app).get("/repositories");
 
-    expect(response.body.repositories).toEqual(
+    expect(response.body).toEqual(
       expect.arrayContaining([
         {
-          id: repository.body.repositorie.id,
+          id: repository.body.id,
           url: "https://github.com/Rocketseat/umbriel",
           title: "Umbriel",
           techs: ["Node", "Express", "TypeScript"],
@@ -55,16 +56,16 @@ describe("Repositories", () => {
       });
 
     const response = await request(app)
-      .put(`/repositories/${repository.body.repositorie.id}`)
+      .put(`/repositories/${repository.body.id}`)
       .send({
         url: "https://github.com/Rocketseat/unform",
         title: "Unform",
         techs: ["React", "ReactNative", "TypeScript", "ContextApi"]
       });
 
-    expect(isUuid(response.body.repositorie.id)).toBe(true);
+    expect(isUuid(response.body.id)).toBe(true);
 
-    expect(response.body.repositorie).toMatchObject({
+    expect(response.body).toMatchObject({
       url: "https://github.com/Rocketseat/unform",
       title: "Unform",
       techs: ["React", "ReactNative", "TypeScript", "ContextApi"]
@@ -85,12 +86,12 @@ describe("Repositories", () => {
       });
 
     const response = await request(app)
-      .put(`/repositories/${repository.body.repositorie.id}`)
+      .put(`/repositories/${repository.body.id}`)
       .send({
         likes: 15
       });
 
-    expect(response.body.repositorie).toMatchObject({
+    expect(response.body).toMatchObject({
       likes: 0
     });
   });
@@ -104,11 +105,11 @@ describe("Repositories", () => {
         techs: ["Node", "Express", "TypeScript"]
       });
 
-    await request(app).delete(`/repositories/${response.body.repositorie.id}`).expect(204);
+    await request(app).delete(`/repositories/${response.body.id}`).expect(204);
 
     const repositories = await request(app).get("/repositories");
 
-    const repository = repositories.body.repositories.find((r) => r.id === response.body.repositorie.id);
+    const repository = repositories.body.find((r) => r.id === response.body.id);
 
     expect(repository).toBe(undefined);
   });
